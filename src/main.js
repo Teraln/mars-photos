@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 
 const router = new VueRouter({
   routes: [
-    {path: '/', component: chooseRover}
+    { path: '/', component: chooseRover, props: true }
   ],
   mode: 'history'
 });

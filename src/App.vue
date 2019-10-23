@@ -29,11 +29,10 @@
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+
+      <router-view :roverManifests='roverManifests'></router-view>
+
     </v-content>
-    beforeMount() {
-    this.logReq();
-    }
     <v-footer app>
       <span>&copy; 2019 Teraln</span>
     </v-footer>
@@ -53,7 +52,7 @@ export default {
     drawer: null,
     //API --filter by: ROVER, CAMERA, [SOL, DATE], {manifest}
     //Manifest
-    rovers: [
+    roverManifests: [
       {
         name: "spirit",
         launchDate: null,
@@ -61,7 +60,8 @@ export default {
         status: null,
         maxSol: null,
         maxDate: null,
-        cameras: null
+        cameras: null,
+        location: "Gusev crater, Mars"
       },
       {
         name: "opportunity",
@@ -70,7 +70,8 @@ export default {
         status: null,
         maxSol: null,
         maxDate: null,
-        cameras: null
+        cameras: null,
+        location: "Victoria crater, Mars"
       },
       {
         name: "curiosity",
@@ -79,7 +80,8 @@ export default {
         status: null,
         maxSol: null,
         maxDate: null,
-        cameras: null
+        cameras: null,
+        location: "Gale crater, Mars"
       }
     ]
   }),
@@ -87,13 +89,13 @@ export default {
   methods: {
     async getManifests() {
       const getSpirit = await fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[0].name}/latest_photos?api_key=${this.apiKey}`
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.roverManifests[0].name}/latest_photos?api_key=${this.apiKey}`
       );
       const getOpportunity = await fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[1].name}/latest_photos?api_key=${this.apiKey}`
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.roverManifests[1].name}/latest_photos?api_key=${this.apiKey}`
       );
       const getCuriosity = await fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[2].name}/latest_photos?api_key=${this.apiKey}`
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.roverManifests[2].name}/latest_photos?api_key=${this.apiKey}`
       );
 
       const spiritManifest = await getSpirit.json();
@@ -113,21 +115,21 @@ export default {
     },
     declareManifests() {
       this.getManifests().then(manifest => {
-        for (let index = 0; index < this.rovers.length; index++) {
-          this.rovers[index].launchDate =
+        for (let index = 0; index < this.roverManifests.length; index++) {
+          this.roverManifests[index].launchDate =
             manifest.data[index].latest_photos[0].rover.launch_date;
-          this.rovers[index].landingDate =
+          this.roverManifests[index].landingDate =
             manifest.data[index].latest_photos[0].rover.landing_date;
-          this.rovers[index].status =
+          this.roverManifests[index].status =
             manifest.data[index].latest_photos[0].rover.status;
-          this.rovers[index].maxSol =
+          this.roverManifests[index].maxSol =
             manifest.data[index].latest_photos[0].rover.max_sol;
-          this.rovers[index].maxDate =
+          this.roverManifests[index].maxDate =
             manifest.data[index].latest_photos[0].rover.max_date;
-          this.rovers[index].cameras =
+          this.roverManifests[index].cameras =
             manifest.data[index].latest_photos[0].rover.cameras;
 
-            console.log(this.rovers[index])
+          console.log(this.roverManifests[index]);
         }
       });
     }
