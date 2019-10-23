@@ -1,28 +1,147 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app clipped temporary>
+      <v-list dense>
+        <v-list-item>
+          <!--@click=""-->
+          <v-list-item-action>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <!--@click=""-->
+          <v-list-item-action>
+            <v-icon>mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Choose your rover...</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Mars Photos</v-toolbar-title>
+    </v-app-bar>
+
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+    beforeMount() {
+    this.logReq();
+    }
+    <v-footer app>
+      <span>&copy; 2019 Teraln</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+/*TODO @beforecreate => get manifests:
+  latest photos (last element of response):
+  https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos?api_key=LnzS3rdqPFeIZMnbzNK4E7wD8WfFxVfFQcrAdslf
+  get res.rover.max_sol, res.rover.max_date, res.rover
+  */
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  data: () => ({
+    apiKey: "LnzS3rdqPFeIZMnbzNK4E7wD8WfFxVfFQcrAdslf",
+    drawer: null,
+    //API --filter by: ROVER, CAMERA, [SOL, DATE], {manifest}
+    //Manifest
+    rovers: [
+      {
+        name: "spirit",
+        launchDate: null,
+        landingDate: null,
+        status: null,
+        maxSol: null,
+        maxDate: null,
+        cameras: null
+      },
+      {
+        name: "opportunity",
+        launchDate: null,
+        landingDate: null,
+        status: null,
+        maxSol: null,
+        maxDate: null,
+        cameras: null
+      },
+      {
+        name: "curiosity",
+        launchDate: null,
+        landingDate: null,
+        status: null,
+        maxSol: null,
+        maxDate: null,
+        cameras: null
+      }
+    ]
+  }),
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  methods: {
+    async getManifests() {
+      const getSpirit = await fetch(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[0].name}/latest_photos?api_key=${this.apiKey}`
+      );
+      const getOpportunity = await fetch(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[1].name}/latest_photos?api_key=${this.apiKey}`
+      );
+      const getCuriosity = await fetch(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${this.rovers[2].name}/latest_photos?api_key=${this.apiKey}`
+      );
+
+      const spiritManifest = await getSpirit.json();
+      const opportunityManifest = await getOpportunity.json();
+      const curiosityManifest = await getCuriosity.json();
+
+      const tempArr = console.log([
+        spiritManifest,
+        opportunityManifest,
+        curiosityManifest
+      ]);
+
+      return {
+        tempArr,
+        data: [spiritManifest, opportunityManifest, curiosityManifest]
+      };
+    },
+    declareManifests() {
+      this.getManifests().then(manifest => {
+        for (let index = 0; index < this.rovers.length; index++) {
+          this.rovers[index].launchDate =
+            manifest.data[index].latest_photos[0].rover.launch_date;
+          this.rovers[index].landingDate =
+            manifest.data[index].latest_photos[0].rover.landing_date;
+          this.rovers[index].status =
+            manifest.data[index].latest_photos[0].rover.status;
+          this.rovers[index].maxSol =
+            manifest.data[index].latest_photos[0].rover.max_sol;
+          this.rovers[index].maxDate =
+            manifest.data[index].latest_photos[0].rover.max_date;
+          this.rovers[index].cameras =
+            manifest.data[index].latest_photos[0].rover.cameras;
+
+            console.log(this.rovers[index])
+        }
+      });
+    }
+
+    //`https://api.nasa.gov/mars-photos/api/v1/rovers/${eachRover}/photos?sol=1&api_key=${this.apiKey}`,
+    //https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1&api_key=${this.apiKey}
+  },
+  created() {
+    this.$vuetify.theme.dark = true;
+  },
+  beforeMount() {
+    this.declareManifests();
+  }
+};
+</script>
+  /* eslint-disable */
+/* eslint-enable */
