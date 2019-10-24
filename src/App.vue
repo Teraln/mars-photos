@@ -29,9 +29,7 @@
     </v-app-bar>
 
     <v-content>
-
-      <router-view :roverManifests='roverManifests'></router-view>
-
+      <router-view :roverManifests="roverManifests"></router-view>
     </v-content>
     <v-footer app>
       <span>&copy; 2019 Teraln</span>
@@ -54,33 +52,45 @@ export default {
     //Manifest
     roverManifests: [
       {
+        id: 0,
         name: "spirit",
-        launchDate: null,
-        landingDate: null,
-        status: null,
-        maxSol: null,
-        maxDate: null,
-        cameras: null,
+        launchDate: "",
+        landingDate: "",
+        status: "",
+        maxSol: 0,
+        maxDate: "",
+        cameras: {
+          fullNames: [],
+          shortNames: []
+        },
         location: "Gusev crater, Mars"
       },
       {
+        id: 0,
         name: "opportunity",
-        launchDate: null,
-        landingDate: null,
-        status: null,
-        maxSol: null,
-        maxDate: null,
-        cameras: null,
+        launchDate: "",
+        landingDate: "",
+        status: "",
+        maxSol: 0,
+        maxDate: "",
+        cameras: {
+          fullNames: [],
+          shortNames: []
+        },
         location: "Victoria crater, Mars"
       },
       {
+        id: 0,
         name: "curiosity",
-        launchDate: null,
-        landingDate: null,
-        status: null,
-        maxSol: null,
-        maxDate: null,
-        cameras: null,
+        launchDate: "",
+        landingDate: "",
+        status: "",
+        maxSol: 0,
+        maxDate: "",
+        cameras: {
+          fullNames: [],
+          shortNames: []
+        },
         location: "Gale crater, Mars"
       }
     ]
@@ -115,21 +125,29 @@ export default {
     },
     declareManifests() {
       this.getManifests().then(manifest => {
-        for (let index = 0; index < this.roverManifests.length; index++) {
-          this.roverManifests[index].launchDate =
-            manifest.data[index].latest_photos[0].rover.launch_date;
-          this.roverManifests[index].landingDate =
-            manifest.data[index].latest_photos[0].rover.landing_date;
-          this.roverManifests[index].status =
-            manifest.data[index].latest_photos[0].rover.status;
-          this.roverManifests[index].maxSol =
-            manifest.data[index].latest_photos[0].rover.max_sol;
-          this.roverManifests[index].maxDate =
-            manifest.data[index].latest_photos[0].rover.max_date;
-          this.roverManifests[index].cameras =
-            manifest.data[index].latest_photos[0].rover.cameras;
+        for (let i = 0; i < this.roverManifests.length; i++) {
+          let apiEndPoint = manifest.data[i].latest_photos[0].rover;
 
-          console.log(this.roverManifests[index]);
+          this.roverManifests[i].launchDate = apiEndPoint.launch_date;
+          this.roverManifests[i].landingDate = apiEndPoint.landing_date;
+          this.roverManifests[i].status = apiEndPoint.status;
+          this.roverManifests[i].maxSol = apiEndPoint.max_sol;
+          this.roverManifests[i].maxDate = apiEndPoint.max_date;
+
+          //Create separate arrays of full camera names and short camera names
+
+          let camFullNames = [];
+          let camShortNames = [];
+
+          for (let j = 0; j < apiEndPoint.cameras.length; j++) {
+            camFullNames.push(apiEndPoint.cameras[j].full_name);
+            camShortNames.push(apiEndPoint.cameras[j].name);
+          }
+
+          this.roverManifests[i].cameras.fullNames = camFullNames;
+          this.roverManifests[i].cameras.shortNames = camShortNames;
+
+          console.log(this.roverManifests[i]); // LOG
         }
       });
     }
