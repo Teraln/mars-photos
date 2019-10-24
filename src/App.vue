@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped temporary>
+    <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item>
           <!--@click=""-->
@@ -66,7 +66,7 @@ export default {
         location: "Gusev crater, Mars"
       },
       {
-        id: 0,
+        id: 1,
         name: "opportunity",
         launchDate: "",
         landingDate: "",
@@ -80,7 +80,7 @@ export default {
         location: "Victoria crater, Mars"
       },
       {
-        id: 0,
+        id: 2,
         name: "curiosity",
         launchDate: "",
         landingDate: "",
