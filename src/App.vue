@@ -1,6 +1,9 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
+      <router-link to="/">Home</router-link>
+      <router-link to="/rovers">Rovers</router-link>
+      <router-link to="/viewer">Viewer</router-link>
       <v-list>
         <v-list-item>
           <!--@click=""-->
@@ -32,7 +35,16 @@
       <router-view :roverManifests="roverManifests"></router-view>
     </v-content>
     <v-footer app>
-      <span>&copy; 2019 Teraln</span>
+      <span>
+        &copy; 2019
+        <a href="https://github.com/Teraln" target="_blank">Teraln</a>
+      </span>
+      <v-spacer></v-spacer>
+      <span>
+        API by
+        <a href="https://github.com/chrisccerami/" target="_blank">Chris Cerami</a>
+      </span>
+      <img class="ml-4" src="https://img.icons8.com/color/24/000000/nasa.png" alt="NasaIcon" />
     </v-footer>
   </v-app>
 </template>
@@ -47,7 +59,7 @@
 export default {
   data: () => ({
     apiKey: "LnzS3rdqPFeIZMnbzNK4E7wD8WfFxVfFQcrAdslf",
-    drawer: null,
+    drawer: false,
     //API --filter by: ROVER, CAMERA, [SOL, DATE], {manifest}
     //Manifest
     roverManifests: [
