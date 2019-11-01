@@ -162,7 +162,7 @@ export default {
           this.roverManifests[i].cameras.fullNames = camFullNames;
           this.roverManifests[i].cameras.shortNames = camShortNames;
 
-          console.log(this.roverManifests[i]); // LOG
+          console.log(this.roverManifests[i]); //TODO LOG
         }
       });
     }
