@@ -56,7 +56,15 @@
           <v-col cols="10">
             <v-list-item class="justify-center">
               <v-card-actions class="col-10">
-                <v-btn raised block color="amber darken-4" x-large width="100%" class="mb-4">Select</v-btn>
+                <v-btn
+                  @click="clicked($event, roverManifest.id)"
+                  raised
+                  block
+                  color="amber darken-4"
+                  x-large
+                  width="100%"
+                  class="mb-4"
+                >Select</v-btn>
               </v-card-actions>
             </v-list-item>
           </v-col>
@@ -72,6 +80,12 @@ export default {
   props: ["roverManifest"],
   data() {
     return {};
+  },
+  methods: {
+    clicked: function(event, roverID) {
+      const ID = roverID;
+      this.$eventHub.$emit("rover-selected", event, ID);
+    }
   }
 };
 </script>

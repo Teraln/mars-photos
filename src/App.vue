@@ -75,7 +75,8 @@ export default {
           fullNames: [],
           shortNames: []
         },
-        location: "Gusev crater, Mars"
+        location: "Gusev crater, Mars",
+        selected: false
       },
       {
         id: 1,
@@ -89,7 +90,8 @@ export default {
           fullNames: [],
           shortNames: []
         },
-        location: "Victoria crater, Mars"
+        location: "Victoria crater, Mars",
+        selected: false
       },
       {
         id: 2,
@@ -103,7 +105,8 @@ export default {
           fullNames: [],
           shortNames: []
         },
-        location: "Gale crater, Mars"
+        location: "Gale crater, Mars",
+        selected: false
       }
     ]
   }),
@@ -124,14 +127,14 @@ export default {
       const opportunityManifest = await getOpportunity.json();
       const curiosityManifest = await getCuriosity.json();
 
-      const tempArr = console.log([
+      /*const tempArr = console.log([
         spiritManifest,
         opportunityManifest,
         curiosityManifest
-      ]);
+      ]);*/
 
       return {
-        tempArr,
+        //tempArr,
         data: [spiritManifest, opportunityManifest, curiosityManifest]
       };
     },
@@ -172,6 +175,27 @@ export default {
   },
   beforeMount() {
     this.declareManifests();
+
+    this.$eventHub.$on("rover-selected", (event, roverID) => {
+      //      console.log(this.roverManifests[roverID].selected)
+
+      if (event) {
+        event.preventDefault();
+
+        for (let i = 0; i < this.roverManifests.length; i++) {
+          this.roverManifests[i].selected = false;
+        }
+        this.roverManifests[roverID].selected = true;
+      }
+
+
+      console.log(this.roverManifests[roverID].selected)
+      this.$router.push({ path: 'viewer' })
+
+    });
+  },
+  beforeDestroy() {
+    this.$eventHub.$off("rover-selected");
   }
 };
 </script>
