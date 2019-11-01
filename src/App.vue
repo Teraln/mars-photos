@@ -188,8 +188,6 @@ export default {
         this.roverManifests[roverID].selected = true;
       }
 
-
-      console.log(this.roverManifests[roverID].selected)
       this.$router.push({ path: 'viewer' })
 
     });
