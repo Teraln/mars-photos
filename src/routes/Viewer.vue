@@ -1,12 +1,10 @@
 <template>
   <div class="Viewer">
-    <v-container fluid fill-height>
+    <v-container fill-height>
       <!--Cameras-->
       <v-row justify="center">
         <v-col class="col-md-6 col-sm-10 col-xs-12">
           <v-card flat color="transparent">
-            <v-subheader></v-subheader>
-
             <v-card-text class="pt-0">
               <!-- //TODO Use v-bind to bind the data-->
               <!--v-model="camera"-->
@@ -18,7 +16,6 @@
                 step="1"
                 min="1"
                 :max="this.getCamNames.length"
-                thumb-label="always"
                 ticks="always"
                 tick-size="4"
                 :tick-labels="this.getCamNames"
@@ -29,8 +26,8 @@
       </v-row>
       <!--Pics-->
       <v-row justify="center">
-        <v-col class="col-md-10 col-sm-12">
-          <v-card height="50vh" max-width="100vw">
+        <v-col class="col-md-6 col-sm-12">
+          <v-card height="60vh" max-width="100vw">
             <h1 v-if="!imageData.notEmpty">No images for this query...</h1>
             <v-img v-else :src="getCurrentPhoto" max-height="100%" contain justify="center"></v-img>
           </v-card>
@@ -38,27 +35,34 @@
       </v-row>
       <!--Choose Day-->
       <v-row justify="center">
-        <v-col class="col-md-10 col-sm-12">
+        <v-col class="col-1" align="center">
+          <v-btn @click="imgSwitch(false)" text icon color="primary">
+            <v-icon size="56">mdi-chevron-left</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col class="col-md-8 col-sm-10">
           <v-card flat color="transparent">
-            <v-subheader></v-subheader>
-
             <v-card-text class="pt-0">
               <!-- //TODO Use v-bind to bind the data-->
-
               <v-slider
                 v-model="imageData.imgIndex"
-                hint
-                label="Images"
+                hint="Images"
                 persistent-hint
                 step="1"
                 ticks="always"
                 tick-size="4"
+                :thumb-size="24"
+                thumb-label="always"
                 min="0"
                 :max="imageData.links.length - 1"
-                thumb-label="always"
               ></v-slider>
             </v-card-text>
           </v-card>
+        </v-col>
+        <v-col class="col-1" justify="center" align="center">
+          <v-btn @click="imgSwitch(true)" text icon color="primary">
+            <v-icon size="56">mdi-chevron-right</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -108,7 +112,13 @@ export default {
         }
       }
     },
-
+    imgSwitch(int) {
+      if (this.imageData.imgIndex > 0 && int === false) {
+        this.imageData.imgIndex--;
+      } else if (int === true) {
+        this.imageData.imgIndex++;
+      }
+    },
     getImages: async function() {
       const ePoint = this.queryData;
       const imagesRaw = await fetch(
@@ -151,9 +161,7 @@ export default {
     this.queryHandler();
     this.declareImages();
   },
-  beforeUpdate() {
-    
-  },
+  beforeUpdate() {},
   updated() {}
 };
 </script>
