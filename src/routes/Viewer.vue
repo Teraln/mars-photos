@@ -3,7 +3,7 @@
     <v-container fill-height>
       <!--Cameras-->
       <v-row justify="center">
-        <v-col class="col-md-6 col-sm-10 col-xs-12">
+        <v-col class="col-md-7 col-sm-11 col-xs-12 py-0">
           <v-card flat color="transparent">
             <v-card-text class="pt-0">
               <!-- //TODO Use v-bind to bind the data-->
@@ -23,12 +23,27 @@
             </v-card-text>
           </v-card>
         </v-col>
+        <!--Sol-->
+        <v-col class="col-md-1 col-sm-1 col-xs-12">
+          <v-text-field
+            class="ml-5"
+            @input="solSwitch"
+            v-model="queryData.sol"
+            :label="`Max: ${maxSol}`"
+            outlined
+            type="number"
+            min="1"
+            :max="maxSol"
+            :maxlength="4"
+          />
+        </v-col>
       </v-row>
       <!--Pics-->
       <v-row justify="center">
         <v-col class="col-md-6 col-sm-12">
-          <v-card height="60vh" max-width="100vw">
-            <h1 v-if="!imageData.notEmpty">No images for this query...</h1>
+          <v-card height="60vh" align="center">
+            <h1 v-if="!imageData.notEmpty" class="text-center pt-5">No images for this query...</h1>
+
             <v-img v-else :src="getCurrentPhoto" max-height="100%" contain justify="center"></v-img>
           </v-card>
         </v-col>
@@ -52,7 +67,7 @@
                 ticks="always"
                 tick-size="4"
                 :thumb-size="24"
-                thumb-label="always"
+                :thumb-label="imgThumbLabel"
                 min="0"
                 :max="imageData.links.length - 1"
               ></v-slider>
@@ -79,7 +94,7 @@ export default {
       queryData: {
         rover: "",
         id: 0,
-        sol: 100,
+        sol: 50,
         cameraIndex: 1,
         camera: "FHAZ"
       },
@@ -87,7 +102,8 @@ export default {
         notEmpty: true,
         size: 0,
         imgIndex: 0,
-        links: []
+        links: [],
+        earthDate: ""
         //TODO add earth date later
       }
     };
@@ -101,6 +117,16 @@ export default {
     },
     getCurrentPhoto() {
       return this.imageData.links[this.imageData.imgIndex];
+    },
+    imgThumbLabel() {
+      if (this.imageData.imgIndex >= 0) {
+        return "always";
+      } else {
+        return true;
+      }
+    },
+    maxSol() {
+      return this.roverManifests[this.queryData.id].maxSol;
     }
   },
   methods: {
@@ -145,21 +171,25 @@ export default {
           for (let i = 0; i < data.images.photos.length; i++) {
             this.imageData.links.push(data.images.photos[i].img_src);
           }
-
           this.imageData.notEmpty = true;
         }
         this.imageData.imgIndex = 0;
       });
     },
+
     assignCamera: function() {
       this.queryData.camera = this.getCamNames[this.queryData.cameraIndex - 1];
       this.imageData.links = [];
       this.declareImages();
+    },
+    solSwitch: function() {
+      this.assignCamera();
     }
   },
   beforeMount() {
     this.queryHandler();
     this.declareImages();
+    this.assignCamera();
   },
   beforeUpdate() {},
   updated() {}
@@ -169,5 +199,9 @@ export default {
 <style lang="scss" scoped>
 .Viewer {
   height: 100%;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease-out;
 }
 </style>

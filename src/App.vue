@@ -1,32 +1,33 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped>
-      <router-link to="/">Home</router-link>
-      <router-link to="/rovers">Rovers</router-link>
-      <router-link to="/viewer">Viewer</router-link>
+    <v-navigation-drawer v-model="drawer" app clipped temporary>
       <v-list>
-        <v-list-item>
-          <!--@click=""-->
-          <v-list-item-action>
-            <v-icon>mdi-view-dashboard</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <!--@click=""-->
-          <v-list-item-action>
-            <v-icon>mdi-settings</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Choose your rover...</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+                <router-link to="/home">
+          <v-list-item>
+            <!--@click=""-->
+            <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link to="/rovers">
+          <v-list-item>
+            <!--@click=""-->
+            <v-list-item-action>
+              <v-icon>mdi-settings</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Rovers</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left>
+    <v-app-bar app clipped-left height="40">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Mars Photos</v-toolbar-title>
     </v-app-bar>
@@ -188,8 +189,7 @@ export default {
         this.roverManifests[roverID].selected = true;
       }
 
-      this.$router.push({ path: 'viewer' })
-
+      this.$router.push({ path: "viewer" });
     });
   },
   beforeDestroy() {
