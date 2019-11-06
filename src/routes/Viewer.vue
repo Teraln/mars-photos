@@ -24,7 +24,7 @@
           </v-card>
         </v-col>
         <!--Sol-->
-        <v-col class="col-md-1 col-sm-1 col-xs-12">
+        <v-col class="col-md-2 col-sm-2 col-xs-12 solSwitch">
           <v-text-field
             class="ml-5"
             @input="solSwitch"
@@ -203,5 +203,9 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease-out;
+}
+.solSwitch {
+  max-width: 8rem !important;
+  min-width: 8rem !important;
 }
 </style>

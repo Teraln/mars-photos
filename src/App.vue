@@ -1,35 +1,13 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped temporary>
-      <v-list>
-                <router-link to="/home">
-          <v-list-item>
-            <!--@click=""-->
-            <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-        <router-link to="/rovers">
-          <v-list-item>
-            <!--@click=""-->
-            <v-list-item-action>
-              <v-icon>mdi-settings</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Rovers</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar app clipped-left height="40">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app clipped-left height="45">
       <v-toolbar-title>Mars Photos</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn v-show="returnRoute" class="mx-2" icon fab dark small>
+        <router-link to="/">
+          <v-icon>mdi-settings</v-icon>
+        </router-link>
+      </v-btn>
     </v-app-bar>
 
     <v-content>
@@ -111,6 +89,15 @@ export default {
       }
     ]
   }),
+  computed: {
+    returnRoute() {
+      if(this.$route.path === "/") {
+        return false
+      } else {
+        return true
+      }
+    }
+  },
 
   methods: {
     async getManifests() {
