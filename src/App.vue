@@ -4,24 +4,14 @@
       <v-toolbar-title>Mars Photos</v-toolbar-title>
       <v-spacer></v-spacer>
       <router-link to="/">
-        <v-btn v-show="returnRoute" icon fab dark small>
-          <v-icon>mdi-settings</v-icon>
+        <v-btn v-show="returnRoute" text icon fab dark small>
+          <v-icon color="amber darken-4">mdi-settings</v-icon>
         </v-btn>
       </router-link>
 
-      <v-btn
-        @click="modalState = true"
-        v-slot:activator="{ on }"
-        text
-        icon
-        fab
-        dark
-        small
-        color="amber darken-4"
-      >
-        <v-icon>mdi-information</v-icon>
+      <v-btn @click="modalState = true" text icon fab dark small>
+        <v-icon color="amber darken-4">mdi-information</v-icon>
       </v-btn>
-      <v-icon>mdi-information</v-icon>
     </v-app-bar>
     <v-content>
       <WelcomeModal :modalState="modalState" />
