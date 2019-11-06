@@ -11,7 +11,7 @@
               <v-slider
                 v-model="queryData.cameraIndex"
                 @change="assignCamera"
-                label="Cameras"
+                hint="Cameras"
                 persistent-hint
                 step="1"
                 min="1"

@@ -3,14 +3,28 @@
     <v-app-bar app clipped-left height="45">
       <v-toolbar-title>Mars Photos</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-show="returnRoute" class="mx-2" icon fab dark small>
-        <router-link to="/">
+      <router-link to="/">
+        <v-btn v-show="returnRoute" icon fab dark small>
           <v-icon>mdi-settings</v-icon>
-        </router-link>
-      </v-btn>
-    </v-app-bar>
+        </v-btn>
+      </router-link>
 
+      <v-btn
+        @click="modalState = true"
+        v-slot:activator="{ on }"
+        text
+        icon
+        fab
+        dark
+        small
+        color="amber darken-4"
+      >
+        <v-icon>mdi-information</v-icon>
+      </v-btn>
+      <v-icon>mdi-information</v-icon>
+    </v-app-bar>
     <v-content>
+      <WelcomeModal :modalState="modalState" />
       <router-view :roverManifests="roverManifests"></router-view>
     </v-content>
     <v-footer app>
@@ -29,17 +43,16 @@
 </template>
 
 <script>
-/*TODO @beforecreate => get manifests:
-  latest photos (last element of response):
-  https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos?api_key=LnzS3rdqPFeIZMnbzNK4E7wD8WfFxVfFQcrAdslf
-  get res.rover.max_sol, res.rover.max_date, res.rover
-  */
+import WelcomeModal from "./components/WelcomeModal";
 
 export default {
+  components: {
+    WelcomeModal
+  },
   data: () => ({
+    modalState: false,
     apiKey: "LnzS3rdqPFeIZMnbzNK4E7wD8WfFxVfFQcrAdslf",
     drawer: false,
-    //API --filter by: ROVER, CAMERA, [SOL, DATE], {manifest}
     //Manifest
     roverManifests: [
       {
@@ -91,10 +104,10 @@ export default {
   }),
   computed: {
     returnRoute() {
-      if(this.$route.path === "/") {
-        return false
+      if (this.$route.path === "/") {
+        return false;
       } else {
-        return true
+        return true;
       }
     }
   },
@@ -115,14 +128,7 @@ export default {
       const opportunityManifest = await getOpportunity.json();
       const curiosityManifest = await getCuriosity.json();
 
-      /*const tempArr = console.log([
-        spiritManifest,
-        opportunityManifest,
-        curiosityManifest
-      ]);*/
-
       return {
-        //tempArr,
         data: [spiritManifest, opportunityManifest, curiosityManifest]
       };
     },
@@ -177,6 +183,12 @@ export default {
       }
 
       this.$router.push({ path: "viewer" });
+    });
+  },
+  beforeUpdate() {
+    this.$eventHub.$on("close-modal", (event, bool) => {
+      event.preventDefault();
+      this.modalState = bool;
     });
   },
   beforeDestroy() {
