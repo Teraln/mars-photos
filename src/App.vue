@@ -154,8 +154,14 @@ export default {
     //`https://api.nasa.gov/mars-photos/api/v1/rovers/${eachRover}/photos?sol=1&api_key=${this.apiKey}`,
     //https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1&api_key=${this.apiKey}
   },
+  beforeCreate(){
+        window.onload = () => {
+      this.$router.push({ path: "/" });
+    };
+  },
   created() {
     this.$vuetify.theme.dark = true;
+
   },
   beforeMount() {
     this.declareManifests();

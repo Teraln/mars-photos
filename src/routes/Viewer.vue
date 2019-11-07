@@ -3,10 +3,9 @@
     <v-container fill-height>
       <!--Cameras-->
       <v-row justify="center">
-        <v-col class="col-md-7 col-sm-11 col-xs-12 py-0">
+        <v-col class="col-md-6 col-xs-12 py-0">
           <v-card flat color="transparent">
             <v-card-text class="pt-0">
-              <!-- //TODO Use v-bind to bind the data-->
               <!--v-model="camera"-->
               <v-slider
                 v-model="queryData.cameraIndex"
@@ -24,7 +23,7 @@
           </v-card>
         </v-col>
         <!--Sol-->
-        <v-col class="col-md-2 col-sm-2 col-xs-12 solSwitch">
+        <v-col class="col-md-2 col-xs-12 solSwitch">
           <v-text-field
             class="ml-5"
             @input="solSwitch"
