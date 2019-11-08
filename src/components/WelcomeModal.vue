@@ -33,7 +33,7 @@
               <v-list-item-title>
                 <v-icon class="mr-1">mdi-information</v-icon>Notes
               </v-list-item-title>
-              <v-list-item-subtitle>Not all rovers have all listed cameras</v-list-item-subtitle>
+              <v-list-item-subtitle>Not all rovers have all of the cameras listed above.</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>

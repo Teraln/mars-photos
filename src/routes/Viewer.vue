@@ -3,10 +3,9 @@
     <v-container fill-height>
       <!--Cameras-->
       <v-row justify="center">
-        <v-col class="col-md-6 col-xs-12 py-0">
+        <v-col class="py-0 col-md">
           <v-card flat color="transparent">
             <v-card-text class="pt-0">
-              <!--v-model="camera"-->
               <v-slider
                 v-model="queryData.cameraIndex"
                 @change="assignCamera"
@@ -23,12 +22,13 @@
           </v-card>
         </v-col>
         <!--Sol-->
-        <v-col class="col-md-2 col-xs-12 solSwitch">
+        <v-col class="solSwitch col-md">
           <v-text-field
             class="ml-5"
             @input="solSwitch"
             v-model="queryData.sol"
-            :label="`Max: ${maxSol}`"
+            label="Sol"
+            :hint="`Max: ${maxSol}`"
             outlined
             type="number"
             min="1"
@@ -39,9 +39,9 @@
       </v-row>
       <!--Pics-->
       <v-row justify="center">
-        <v-col class="col-md-6 col-sm-12">
-          <v-card height="60vh" align="center">
-            <h1 v-if="!imageData.notEmpty" class="text-center pt-5">No images for this query...</h1>
+        <v-col class="col-12">
+          <v-card height="55vh" align="center">
+            <h1 v-if="!imageData.notEmpty" class="text-center pt-5" color="amber lighten-4">No images for this query...</h1>
 
             <v-img v-else :src="getCurrentPhoto" max-height="100%" contain justify="center"></v-img>
           </v-card>
