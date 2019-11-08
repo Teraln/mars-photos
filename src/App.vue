@@ -146,7 +146,6 @@ export default {
           this.roverManifests[i].cameras.fullNames = camFullNames;
           this.roverManifests[i].cameras.shortNames = camShortNames;
 
-          console.log(this.roverManifests[i]); //TODO LOG
         }
       });
     }
@@ -167,8 +166,6 @@ export default {
     this.declareManifests();
 
     this.$eventHub.$on("rover-selected", (event, roverID) => {
-      //      console.log(this.roverManifests[roverID].selected)
-
       if (event) {
         event.preventDefault();
 

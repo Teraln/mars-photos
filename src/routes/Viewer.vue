@@ -157,18 +157,13 @@ export default {
 
       const images = await imagesRaw.json();
 
-      //TODO delet dis
-      //const imgLog = console.log(images);
 
       return {
-        //imgLog,
         images
       };
     },
     declareImages() {
       this.getImages().then(data => {
-        //TODO delet dis
-        console.log(data);
         if (data.images.photos.length === 0) {
           this.imageData.notEmpty = false;
         } else {
