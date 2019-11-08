@@ -1,10 +1,17 @@
 <template>
   <v-col justify="center" class="col-md-4 col-sm-12 mb-4">
-    <v-card class="mx-auto" width="320" height="500" raised shaped>
+    <v-card class="mx-auto" width="280" raised shaped>
       <v-row class="fill-height" cols="12">
-        <v-col class="mb-5 col-8 col-md-8 col-sm-12">
+        <v-col class="mb-5 col-12">
           <v-list-item>
             <div class="overline mb-4 ml-3">{{ roverManifest.name }}</div>
+
+            <v-spacer></v-spacer>
+            <v-list-item-avatar size="40" color="grey" class="d-flex align-self-end">
+            <img :src="require(`@/assets/${roverManifest.name}.png`)" />
+          </v-list-item-avatar>
+
+
           </v-list-item>
           <v-divider class="ml-2"></v-divider>
           <v-list-item two-line>
@@ -47,11 +54,11 @@
           <v-divider class="ml-2"></v-divider>
         </v-col>
 
-        <v-col class="d-flex align-center flex-column col-md-4 col-sm-12">
-          <v-list-item-avatar size="80" color="grey" class="d-flex align-self-end">
-            <img :src="require(`@/assets/${roverManifest.name}.png`)" />
-          </v-list-item-avatar>
-        </v-col>
+
+
+
+
+
         <v-row width="100%" justify="center">
           <v-col cols="10">
             <v-list-item class="justify-center">

@@ -1,9 +1,25 @@
 <template>
   <div class="Viewer">
-    <v-container fill-height>
-      <!--Cameras-->
+    <v-container>
       <v-row justify="center">
-        <v-col class="py-0 col-md">
+        <!--Sol-->
+        <v-col class="col-auto col-md-2" justify="center">
+          <v-card flat color="transparent" class="solSwitch">
+            <v-text-field
+              @input="solSwitch"
+              v-model="queryData.sol"
+              label="Sol"
+              :hint="`Max: ${maxSol}`"
+              outlined
+              type="number"
+              min="1"
+              :max="maxSol"
+              :maxlength="4"
+            />
+          </v-card>
+        </v-col>
+        <!--Cameras-->
+        <v-col class="py-0 col-12 col-md-8">
           <v-card flat color="transparent">
             <v-card-text class="pt-0">
               <v-slider
@@ -21,34 +37,23 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <!--Sol-->
-        <v-col class="solSwitch col-md">
-          <v-text-field
-            class="ml-5"
-            @input="solSwitch"
-            v-model="queryData.sol"
-            label="Sol"
-            :hint="`Max: ${maxSol}`"
-            outlined
-            type="number"
-            min="1"
-            :max="maxSol"
-            :maxlength="4"
-          />
-        </v-col>
       </v-row>
       <!--Pics-->
       <v-row justify="center">
         <v-col class="col-12">
           <v-card height="55vh" align="center">
-            <h1 v-if="!imageData.notEmpty" class="text-center pt-5" color="amber lighten-4">No images for this query...</h1>
+            <h1
+              v-if="!imageData.notEmpty"
+              class="text-center pt-5"
+              color="amber lighten-4"
+            >No images for this query...</h1>
 
-            <v-img v-else :src="getCurrentPhoto" max-height="100%" contain justify="center"></v-img>
+            <v-img v-else :src="getCurrentPhoto" max-height="100%" contain allign="center"></v-img>
           </v-card>
         </v-col>
       </v-row>
       <!--Choose Day-->
-      <v-row justify="center">
+      <v-row justify="center" class="mt-3">
         <v-col class="col-1" align="center">
           <v-btn @click="imgSwitch(false)" text icon color="primary">
             <v-icon size="56">mdi-chevron-left</v-icon>
@@ -196,15 +201,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Viewer {
-  height: 100%;
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease-out;
 }
 .solSwitch {
-  max-width: 8rem !important;
-  min-width: 8rem !important;
+  max-width: 6rem !important;
+  min-width: 6rem !important;
 }
 </style>

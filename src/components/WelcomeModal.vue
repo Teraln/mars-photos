@@ -17,7 +17,7 @@
               <v-list-item-title>
                 <v-icon class="mr-1">mdi-information</v-icon>What is a Sol?
               </v-list-item-title>
-              <v-list-item-subtitle>Sol (borrowed from the Latin word for sun) is a Mars solar day; that is, a Mars-day. A sol is the apparent interval between two successive returns of the Sun to the same meridian (sundial time) as seen by an observer on Mars.</v-list-item-subtitle>
+              <v-list-item-subtitle>Sol is a Mars day. A sol is the apparent interval between two successive returns of the Sun to the same meridian (sundial time) as seen by an observer on Mars.</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>

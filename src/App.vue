@@ -192,5 +192,10 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+  .v-slider__tick-label {
+  font-size: 0.6rem;
+}
+</style>
   /* eslint-disable */
 /* eslint-enable */
