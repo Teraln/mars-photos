@@ -9,7 +9,7 @@
         </v-btn>
       </router-link>
 
-      <v-btn class="mr-1" @click="modalState = true" text icon fab dark small>
+      <v-btn @click="modalState = true" text icon fab dark small>
         <v-icon color="amber darken-4">mdi-information</v-icon>
       </v-btn>
     </v-app-bar>
